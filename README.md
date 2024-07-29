@@ -8,6 +8,8 @@ Tests results of yearly rebalancing
 
 # To run
 
+pip install poetry
+
 poetry install
 
 poetry poetry run streamlit run ./app/front.py
