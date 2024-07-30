@@ -17,13 +17,16 @@ RUN --mount=type=cache,target=$POETRY_CACHE_DIR python -m poetry install --no-ro
 
 FROM python:3.11-slim-buster as runtime
 
+
 ENV VIRTUAL_ENV=/app/.venv \
     PATH="/app/.venv/bin:$PATH"
 
 COPY --from=builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
 
+WORKDIR /app
+
 COPY . /app
 
 EXPOSE 8501
 
-ENTRYPOINT  ["streamlit", "run", "/app/app/front.py"]
+ENTRYPOINT  ["streamlit", "run", "./app/front2.py"]

@@ -1,6 +1,4 @@
 import datetime
-import pandas as pd
-import random
 from load_data import safe_load
 
 spy_data, sp500_data = safe_load()
@@ -75,3 +73,61 @@ def rebalance(portfolio, period):
 
 banch, portfolio, rebalanced_portfolio = random_portfolio(2018, 3, 10)
 print(banch.tail())
+
+
+def given_portfolio(tickers, startY, nb_years):
+    # init dates
+    start = datetime.datetime(startY, 1, 1)
+    end = datetime.datetime(startY + nb_years, 1, 1)
+
+    # Calculate value of initial investment of 10K in the Portfolio
+    # initial_investment = 10000, not needed for tests
+
+    # Prepare banchmark set
+    spy = spy_data.loc[start:end]
+
+    # Slice stocks data
+    timeslice = sp500_data.loc[start:end]
+    notnaslice = timeslice.dropna(
+        axis=1
+    )  # is that valid? or a bias, since dropping some values
+    # that do not exist for the whole period
+
+    ticker_names = tickers.split("-")
+
+    # Randomly select NB (e.g. 20) tickers for portfolio
+    given_portfolio = notnaslice[ticker_names]
+    given_portfolio.sort_index(axis=1, inplace=True)
+
+    # cumulative returns  = %difference data to day from the begining of investment
+    banch = (
+        spy / spy.iloc[0]
+    )  # SP500 performance in %, since the start day of investment
+
+    cumulative = (
+        given_portfolio / given_portfolio.iloc[0]
+    )  # calculating cumulative gain from Day 1
+    banch["ROI"] = (
+        cumulative.sum(axis=1) / cumulative.columns.size
+    )  # Summing all partfolio tickers performance and normalizing, since we want to compare with single SPY gains.
+
+    banch["REBALANCED"], rebalanced_portfolio = rebalance(
+        given_portfolio, 252
+    )  # another sample, rebalanacing afer 252 days
+
+    # record stats for various tests
+
+    return banch, given_portfolio, rebalanced_portfolio
+
+
+# b, gp, rp = given_portfolio("AFL-AJG-AME-AXP", 2018, 3)
+
+# print(gp.head())
+
+# print(sp500_data.columns)
+
+# given_ticks = "APD-CCI-CPRT-ES-INTU-RSG-TT-URI-V-VRSK"
+# rand_ticks = random.sample(list(sp500_data.columns), 20)
+# given_ticks = "-".join(sorted(rand_ticks))
+
+# print(given_ticks)
