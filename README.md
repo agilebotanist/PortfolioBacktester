@@ -22,3 +22,9 @@ or
 ```
 poetry poetry run streamlit run ./app/front_simulation.py
 ```
+
+or for multipage version
+
+```
+poetry poetry run streamlit run ./app/Portfolio_Tester_📈.py
+```
