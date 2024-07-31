@@ -9,13 +9,16 @@ st.title("Buy and Hold : Portfolio backtester. v2")
 
 
 startY = st.slider(
-    "Enter a starting year:", min_value=1999, value=2017, step=1,
-    max_value=2023, help="2018"
+    "Enter a starting year:",
+    min_value=1999,
+    value=2017,
+    step=1,
+    max_value=2023,
+    help="2018",
 )
 
 nb_years = st.slider(
-    "Enter a number of years:", min_value=1, value=3, max_value=10,
-    step=1, help="3"
+    "Enter a number of years:", min_value=1, value=3, max_value=10, step=1, help="3"
 )
 
 
@@ -43,10 +46,16 @@ tickers = st.text_input(
 )
 
 # RUN SIMULATION
-banch, portfolio, rebalanced = backtester.given_portfolio(tickers, startY,
-                                                          nb_years)
+banch, portfolio, rebalanced = backtester.given_portfolio(tickers, startY, nb_years)
 
-st.write(f"Return on Investment for {nb_years} years:", banch.iloc[-1])
+# st.write(f"Return on Investment for {nb_years} years:", banch.iloc[-1])
+
+st.write(f"ROI for {nb_years} years:", banch["ROI"].iloc[-1])
+
+st.write("ROI with rebalancing:",
+         banch["REBALANCED"].iloc[-1])
+
+st.write("SP500 index perfromance:", banch["SPY"].iloc[-1])
 
 # Create figure
 fig_banch = px.line(
