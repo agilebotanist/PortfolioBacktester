@@ -46,7 +46,7 @@ tickers = st.text_input(
 banch, portfolio, rebalanced = backtester.given_portfolio(tickers, startY,
                                                           nb_years)
 
-st.write(f"Return on Investment for {nb_years} years:", banch.tail())
+st.write(f"Return on Investment for {nb_years} years:", banch.iloc[-1])
 
 # Create figure
 fig_banch = px.line(

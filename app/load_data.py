@@ -13,7 +13,7 @@ def download_sp500():
     # convert and add missing ['CROX', 'SKX', 'SHOO', 'AER']
     sp500_tickers = sp500_info.Symbol.to_list() + ['CROX', 'SKX', 'SHOO', 'AER'] 
 
-    print(sp500_tickers)
+    # print(sp500_tickers)
 
     history = datetime.datetime(1999, 1, 1)
 

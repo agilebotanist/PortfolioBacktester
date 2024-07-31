@@ -46,7 +46,7 @@ def random_portfolio(startY, nb_years, nb_tickers):
 
     tick = "-".join(random_portfolio.columns)
 
-    print(tick)
+    # print(tick)
 
     return banch, random_portfolio, rebalanced_portfolio
 
@@ -72,7 +72,7 @@ def rebalance(portfolio, period):
 
 
 banch, portfolio, rebalanced_portfolio = random_portfolio(2018, 3, 10)
-print(banch.tail())
+# print(banch.tail())
 
 
 def given_portfolio(tickers, startY, nb_years):
