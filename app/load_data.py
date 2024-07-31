@@ -48,6 +48,6 @@ def safe_load():
         return download_sp500()
 
 
-# spy_data, sp500_data = safe_load()
+spy_data, sp500_data = safe_load()
 
 # print(sp500_data.head())

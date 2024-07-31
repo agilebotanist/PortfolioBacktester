@@ -1,7 +1,6 @@
 import streamlit as st
 import plotly.express as px
-import backtester
-
+from backtester import random_portfolio as random_portfolio
 
 st.title("Buy and Hold : Portfolio backtester")
 
@@ -17,7 +16,7 @@ nb_tickers = st.number_input(
     "Enter a number of tickers (stocks):", min_value=1, max_value=30, help="20"
 )
 
-banch, portfolio, rebalanced = backtester.random_portfolio(
+banch, portfolio, rebalanced = random_portfolio(
     startY, nb_years, nb_tickers
 )
 

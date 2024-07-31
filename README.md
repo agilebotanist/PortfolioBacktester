@@ -6,11 +6,19 @@ Selects a number of random SP500 stocks
 Calculates return on investment
 Tests results of yearly rebalancing 
 
-# To run
+# To deploy
 ```
 pip install poetry
 
 poetry install
+```
+# To run
+```
+poetry poetry run streamlit run ./app/front_portfolio.py
+```
 
-poetry poetry run streamlit run ./app/front2.py
+or
+
+```
+poetry poetry run streamlit run ./app/front_simulation.py
 ```

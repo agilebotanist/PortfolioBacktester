@@ -1,11 +1,12 @@
 import streamlit as st
-import random
-import datetime
 import plotly.express as px
-import backtester
+from backtester import random_ticks as random_ticks
+from backtester import given_portfolio as given_portfolio
+from backtester import SP500_tickers as SP500_tickers
 
+st.set_page_config(page_title="Portfolio tester", page_icon="📈")
 
-st.title("Buy and Hold : Portfolio backtester. v2")
+st.title("Buy and Hold : Portfolio backtester 📈")
 
 
 startY = st.slider(
@@ -22,22 +23,10 @@ nb_years = st.slider(
     help="3"
 )
 
-
-start = datetime.datetime(startY, 1, 1)
-end = datetime.datetime(startY + nb_years, 1, 1)
-
-
-# Slice stocks data
-timeslice = backtester.sp500_data.loc[start:end]
-notnaslice = timeslice.dropna(axis=1)
-
-all_ticks = sorted(list(notnaslice.columns))
-
 _but = st.button("Randomize portfolio")
 
 if ("given_ticks" not in st.session_state) or _but:
-    rand_ticks = random.sample(all_ticks, 10)
-    given_ticks = "-".join(sorted(rand_ticks))
+    given_ticks = random_ticks(startY, nb_years, 10)
     st.session_state.given_ticks = given_ticks
 
 tickers = st.text_input(
@@ -47,8 +36,7 @@ tickers = st.text_input(
 )
 
 # RUN SIMULATION
-banch, portfolio, rebalanced = backtester.given_portfolio(tickers, startY,
-                                                          nb_years)
+banch, portfolio, rebalanced = given_portfolio(tickers, startY, nb_years)
 
 # st.write(f"Return on Investment for {nb_years} years:", banch.iloc[-1])
 
@@ -82,7 +70,7 @@ st.plotly_chart(fig_port)
 
 st.plotly_chart(fig_rebal)
 
-available_SP500 = "-".join(all_ticks)
+available_SP500 = "-".join(SP500_tickers(startY, nb_years))
 
 st.write(f"**Choose from SP500 tickers (stocks) available in {startY}:**")
 st.write(available_SP500)

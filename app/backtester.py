@@ -1,7 +1,8 @@
 import datetime
-from load_data import safe_load
-
-spy_data, sp500_data = safe_load()
+import random
+import pandas as pd
+from load_data import spy_data as spy_data
+from load_data import sp500_data as sp500_data
 
 
 def random_portfolio(startY, nb_years, nb_tickers):
@@ -44,7 +45,7 @@ def random_portfolio(startY, nb_years, nb_tickers):
 
     # record stats for various tests
 
-    tick = "-".join(random_portfolio.columns)
+    # tick = "-".join(random_portfolio.columns)
 
     # print(tick)
 
@@ -119,6 +120,71 @@ def given_portfolio(tickers, startY, nb_years):
 
     return banch, given_portfolio, rebalanced_portfolio
 
+
+def SP500_tickers(startY, nb_years):
+    # init dates
+    start = datetime.datetime(startY, 1, 1)
+    end = datetime.datetime(startY + nb_years, 1, 1)
+    # Slice stocks data
+    timeslice = sp500_data.loc[start:end]
+    notnaslice = timeslice.dropna(axis=1)
+
+    all_ticks = sorted(list(notnaslice.columns))
+
+    return "-".join(all_ticks)
+
+
+def random_ticks(startY, nb_years, nb_stocks):
+    sp_ticks = SP500_tickers(startY, nb_years).split("-")
+    rand_ticks = random.sample(sp_ticks, nb_stocks)
+    return "-".join(sorted(rand_ticks))
+
+
+def simulate(startY, nb_years, nb_stocks, nb_trials):
+    # init stats
+    stats = pd.DataFrame(
+        columns=[
+            "TICKERS",
+            "START",
+            "NYEARS",
+            "RBDAYS",
+            "ROI1Y",
+            "SPY1Y",
+            "ROI",
+            "REBALANCED",
+            "SPY",
+        ]
+    )
+
+    for _ in range(nb_trials):
+        rand = random_ticks(startY, nb_years, nb_stocks)
+        banch, portfolio, rebalanced_portfolio = given_portfolio(rand,
+                                                                 startY,
+                                                                 nb_years)
+        stats = stats._append(
+            {
+                "TICKERS": rand,
+                "START": startY,
+                "NYEARS": nb_years,
+                "RBDAYS": 252,
+                "ROI1Y": banch["ROI"].iloc[252],  # portfolio perf after 1Y
+                "SPY1Y": banch["SPY"].iloc[252],  # SP500 perf after 1Y
+                "ROI": banch["ROI"].iloc[-1],  # portfolio perf
+                "REBALANCED": banch["REBALANCED"].iloc[-1],  # rebalanced portfolio perf
+                "SPY": banch["SPY"].iloc[-1],  # SP500 perf after 3Y
+            },
+            ignore_index=True,
+        )
+    med = stats[["ROI1Y", "SPY1Y", "ROI", "REBALANCED", "SPY"]].median()
+    return stats, med
+
+
+# stats, med = simulate(2017, 3, 10, 10)
+
+# print(med)
+# print(stats.head())
+# print(stats.size)
+# print(stats.tail())
 
 # b, gp, rp = given_portfolio("AFL-AJG-AME-AXP", 2018, 3)
 
