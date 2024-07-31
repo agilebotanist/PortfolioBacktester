@@ -69,7 +69,7 @@ st.plotly_chart(fig_port)
 
 st.plotly_chart(fig_rebal)
 
-available_SP500 = "-".join(SP500_tickers(startY, nb_years))
+available_SP500 = SP500_tickers(startY, nb_years)
 
 st.write(f"**Choose from SP500 tickers (stocks) available in {startY}:**")
 st.write(available_SP500)
