@@ -18,7 +18,7 @@ startY = st.slider(
 )
 
 nb_years = st.slider(
-    "Investment period:", min_value=1, value=3, max_value=10, step=1, 
+    "Investment period in years:", min_value=1, value=3, max_value=10, step=1, 
     help="3"
 )
 
