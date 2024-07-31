@@ -8,13 +8,14 @@ import backtester
 st.title("Buy and Hold : Portfolio backtester. v2")
 
 
-startY = st.number_input(
-    "Enter a starting year:", min_value=1999, value=2017,
-    max_value=2021, help="2018"
+startY = st.slider(
+    "Enter a starting year:", min_value=1999, value=2017, step=1,
+    max_value=2023, help="2018"
 )
 
-nb_years = st.number_input(
-    "Enter a number of years:", min_value=1, value=3, max_value=10, help="3"
+nb_years = st.slider(
+    "Enter a number of years:", min_value=1, value=3, max_value=10,
+    step=1, help="3"
 )
 
 
