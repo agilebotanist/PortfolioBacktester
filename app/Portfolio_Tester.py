@@ -55,12 +55,12 @@ fig_banch = px.line(
 
 fig_port = px.line(
     portfolio / portfolio.iloc[0],
-    title="Portfolio",
+    title="Portfolio cumulative gain",
 )
 
 fig_rebal = px.line(
     rebalanced / rebalanced.iloc[0],
-    title="Rebalanced portfolio",
+    title="Rebalanced portfolio cumulative gain",
 )
 
 # Show figure
@@ -72,5 +72,5 @@ st.plotly_chart(fig_rebal)
 
 available_SP500 = SP500_tickers(startY, nb_years)
 
-st.write(f"**Choose from SP500 tickers (stocks) available in {startY}:**")
+st.write(f"**Choose from tickers (stocks) available in {startY}:**")
 st.write(available_SP500)

@@ -6,57 +6,14 @@ from load_data import sp500_data as sp500_data
 
 
 def random_portfolio(startY, nb_years, nb_tickers):
-    # init dates
-    start = datetime.datetime(startY, 1, 1)
-    end = datetime.datetime(startY + nb_years, 1, 1)
-
-    # Calculate value of initial investment of 10K in the Portfolio
-    # initial_investment = 10000, not needed for tests
-
-    # Prepare banchmark set
-    spy = spy_data.loc[start:end]
-
-    # Slice stocks data
-    timeslice = sp500_data.loc[start:end]
-
-    notnaslice = timeslice.dropna(axis=1, how='all')
-    # is that valid? or a bias, since dropping some values
-    # that do not exist for the whole period
-
-    # Randomly select NB (e.g. 20) tickers for portfolio
-    random_portfolio = notnaslice.sample(n=nb_tickers, axis="columns")
-    random_portfolio.sort_index(axis=1, inplace=True)
-
-    # cumulative returns
-    # = %difference data to day from the begining of investment
-    banch = (
-        spy / spy.iloc[0]
-    )  # SP500 performance in %, since the start day of investment
-
-    cumulative = (
-        random_portfolio / random_portfolio.iloc[0]
-    )  # calculating cumulative gain from Day 1
-    banch["ROI"] = (
-        cumulative.sum(axis=1) / cumulative.columns.size
-    )  # Summing all partfolio tickers performance and normalizing,
-    # since we want to compare with single SPY gains.
-
-    banch["REBALANCED"], rebalanced_portfolio = rebalance(
-        random_portfolio, 252
-    )  # another sample, rebalanacing afer 252 days
-
-    # record stats for various tests
-
-    # tick = "-".join(random_portfolio.columns)
-
-    # print(tick)
-
-    return banch, random_portfolio, rebalanced_portfolio
+    return given_portfolio(random_ticks(startY, nb_years, nb_tickers),
+                           startY, nb_years)
 
 
 def rebalance(portfolio, period):
     # rounding up or down :/
     nperiods = round(portfolio.index.size / period, 0)
+
     n = 0
     cumul = portfolio / portfolio.iloc[0]
     cumul = cumul / cumul.columns.size
@@ -80,22 +37,19 @@ def given_portfolio(tickers, startY, nb_years):
     start = datetime.datetime(startY, 1, 1)
     end = datetime.datetime(startY + nb_years, 1, 1)
 
-    # Calculate value of initial investment of 10K in the Portfolio
-    # initial_investment = 10000, not needed for tests
-
-    # Prepare banchmark set
-    spy = spy_data.loc[start:end]
-
     # Slice stocks data
     timeslice = sp500_data.loc[start:end]
-    notnaslice = timeslice.dropna(axis=1, how='all')
+    notnaslice = timeslice.dropna(axis=1, how="all").dropna(thresh=50)
     # is that valid? or a bias, since dropping some values
     # that do not exist for the whole period
 
+    # Prepare banchmark set
+    spy = spy_data.loc[notnaslice.index[0]:notnaslice.index[-1]]
+
     ticker_names = tickers.split("-")
 
-    # Randomly select NB (e.g. 20) tickers for portfolio
-    given_portfolio = notnaslice[ticker_names]
+    # Randomly select NB (e.g. 20) tickers for portfolio and normalize
+    given_portfolio = notnaslice[ticker_names].dropna()
     given_portfolio.sort_index(axis=1, inplace=True)
 
     # cumulative returns  = %difference data to day from the begining of investment
@@ -103,18 +57,19 @@ def given_portfolio(tickers, startY, nb_years):
         spy / spy.iloc[0]
     )  # SP500 performance in %, since the start day of investment
 
-    cumulative = (
-        given_portfolio / given_portfolio.iloc[0]
-    )  # calculating cumulative gain from Day 1
-    banch["ROI"] = (
-        cumulative.sum(axis=1) / cumulative.columns.size
-    )  # Summing all partfolio tickers performance and normalizing, since we want to compare with single SPY gains.
+    cumulative = given_portfolio / given_portfolio.iloc[0]
+    # calculating cumulative gain from Day 1
+
+    banch["ROI"] = cumulative.sum(axis=1) / cumulative.columns.size
+    # Summing all partfolio tickers performance and normalizing, since we want to compare with single SPY gains.
 
     banch["REBALANCED"], rebalanced_portfolio = rebalance(
         given_portfolio, 252
     )  # another sample, rebalanacing afer 252 days
 
     # record stats for various tests
+
+    banch = banch.dropna()
 
     return banch, given_portfolio, rebalanced_portfolio
 
@@ -125,7 +80,7 @@ def SP500_tickers(startY, nb_years):
     end = datetime.datetime(startY + nb_years, 1, 1)
     # Slice stocks data
     timeslice = sp500_data.loc[start:end]
-    notnaslice = timeslice.dropna(axis=1, how='all')
+    notnaslice = timeslice.dropna(thresh=50).dropna(axis=1)
 
     all_ticks = sorted(list(notnaslice.columns))
 
@@ -182,27 +137,8 @@ def simulate(startY, nb_years, nb_stocks, nb_trials):
     return stats, med
 
 
-# stats, med = simulate(2017, 3, 10, 10)
+# DEBUGGING
 
-# print(med)
-# print(stats.head())
-# print(stats.size)
-# print(stats.tail())
-
-# b, gp, rp = given_portfolio("AFL-AJG-AME-AXP", 2018, 3)
-
-# print(gp.head())
-
-# print(sp500_data.columns)
-
-# given_ticks = "APD-CCI-CPRT-ES-INTU-RSG-TT-URI-V-VRSK"
-# rand_ticks = random.sample(list(sp500_data.columns), 20)
-# given_ticks = "-".join(sorted(rand_ticks))
-
-# print(given_ticks)
-
-
-# Debugging
 # 1. Load data
 
 # print(sp500_data.columns)
@@ -212,3 +148,30 @@ def simulate(startY, nb_years, nb_stocks, nb_trials):
 
 # banch, p, rp = random_portfolio(2018, 3, 10)
 # print(banch.tail())
+# print(p.tail())
+
+# 3. Given portfolio
+
+# banch, p, rp = given_portfolio("SAN.PA", 2017, 3)
+# print(banch.head())
+# print(p.head())
+# print(rp.head())
+
+# 4. Random tickers
+
+# t = random_ticks(2018, 3, 10)
+# print(t)
+
+# 5. SP500 tickers
+
+# t = SP500_tickers(2018, 5)
+# print(t)
+
+# 6. Simulation
+
+# stats, med = simulate(2017, 3, 10, 10)
+
+# print(med)
+# print(stats.head())
+# print(stats.size)
+# print(stats.tail())
