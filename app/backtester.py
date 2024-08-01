@@ -151,8 +151,8 @@ def simulate(startY, nb_years, nb_stocks, nb_trials):
             "REBALANCED",
             "SPY",
             "RBDAYS",
-            "ROI1Y",
-            "SPY1Y",
+            # "ROI1Y",
+            # "SPY1Y",
         ]
     )
 
@@ -165,8 +165,8 @@ def simulate(startY, nb_years, nb_stocks, nb_trials):
                 "START": startY,
                 "NYEARS": nb_years,
                 "RBDAYS": 252,
-                "ROI1Y": banch["ROI"].iloc[252],  # portfolio perf after 1Y
-                "SPY1Y": banch["SPY"].iloc[252],  # SP500 perf after 1Y
+                # "ROI1Y": banch["ROI"].iloc[252],  # portfolio perf after 1Y
+                # "SPY1Y": banch["SPY"].iloc[252],  # SP500 perf after 1Y
                 "ROI": banch["ROI"].iloc[-1],  # portfolio perf
                 "REBALANCED": banch["REBALANCED"].iloc[-1],  # rebalanced portfolio perf
                 "SPY": banch["SPY"].iloc[-1],  # SP500 perf after 3Y
