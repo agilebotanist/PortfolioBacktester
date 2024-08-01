@@ -173,7 +173,14 @@ def simulate(startY, nb_years, nb_stocks, nb_trials):
             },
             ignore_index=True,
         )
-    med = stats[["ROI1Y", "SPY1Y", "ROI", "REBALANCED", "SPY"]].median()
+    med = stats[
+        [
+            # "ROI1Y", "SPY1Y",
+            "ROI",
+            "REBALANCED",
+            "SPY",
+        ]
+    ].median()
     return stats, med
 
 
