@@ -80,7 +80,7 @@ def SP500_tickers(startY, nb_years):
     end = datetime.datetime(startY + nb_years, 1, 1)
     # Slice stocks data
     timeslice = sp500_data.loc[start:end]
-    notnaslice = timeslice.dropna(thresh=50).dropna(axis=1)
+    notnaslice = timeslice.dropna(axis=1, how="all").dropna(thresh=50)
 
     all_ticks = sorted(list(notnaslice.columns))
 

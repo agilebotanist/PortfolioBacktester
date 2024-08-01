@@ -50,17 +50,17 @@ st.write("**SP500** index perfromance:", banch["SPY"].iloc[-1])
 # Create figure
 fig_banch = px.line(
     banch,
-    title="Banchmark",
+    title="Banchmark: Portfolio cumulutive gain vs SP500 index",
 )
 
 fig_port = px.line(
     portfolio / portfolio.iloc[0],
-    title="Portfolio cumulative gain",
+    title="Portfolio stocks cumulative gain",
 )
 
 fig_rebal = px.line(
     rebalanced / rebalanced.iloc[0],
-    title="Rebalanced portfolio cumulative gain",
+    title="Rebalanced portfolio stocks cumulative gain",
 )
 
 # Show figure
@@ -72,5 +72,5 @@ st.plotly_chart(fig_rebal)
 
 available_SP500 = SP500_tickers(startY, nb_years)
 
-st.write(f"**Choose from tickers (stocks) available in {startY}:**")
+st.write(f"**Choose from tickers (stocks) available in our dataset for {startY}:**")
 st.write(available_SP500)
