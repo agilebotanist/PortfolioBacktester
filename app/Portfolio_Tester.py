@@ -14,7 +14,7 @@ startY = st.slider(
     min_value=1999,
     value=2017,
     step=1,
-    max_value=2023,
+    max_value=2024,
     help="2018",
 )
 

@@ -18,16 +18,17 @@ def random_portfolio(startY, nb_years, nb_tickers):
 
     # Slice stocks data
     timeslice = sp500_data.loc[start:end]
-    notnaslice = timeslice.dropna(
-        axis=1
-    )  # is that valid? or a bias, since dropping some values
+
+    notnaslice = timeslice.dropna(axis=1, how='all')
+    # is that valid? or a bias, since dropping some values
     # that do not exist for the whole period
 
     # Randomly select NB (e.g. 20) tickers for portfolio
     random_portfolio = notnaslice.sample(n=nb_tickers, axis="columns")
     random_portfolio.sort_index(axis=1, inplace=True)
 
-    # cumulative returns  = %difference data to day from the begining of investment
+    # cumulative returns
+    # = %difference data to day from the begining of investment
     banch = (
         spy / spy.iloc[0]
     )  # SP500 performance in %, since the start day of investment
@@ -37,7 +38,8 @@ def random_portfolio(startY, nb_years, nb_tickers):
     )  # calculating cumulative gain from Day 1
     banch["ROI"] = (
         cumulative.sum(axis=1) / cumulative.columns.size
-    )  # Summing all partfolio tickers performance and normalizing, since we want to compare with single SPY gains.
+    )  # Summing all partfolio tickers performance and normalizing,
+    # since we want to compare with single SPY gains.
 
     banch["REBALANCED"], rebalanced_portfolio = rebalance(
         random_portfolio, 252
@@ -53,7 +55,8 @@ def random_portfolio(startY, nb_years, nb_tickers):
 
 
 def rebalance(portfolio, period):
-    nperiods = round(portfolio.index.size / period, 0)  # rounding up or down :/
+    # rounding up or down :/
+    nperiods = round(portfolio.index.size / period, 0)
     n = 0
     cumul = portfolio / portfolio.iloc[0]
     cumul = cumul / cumul.columns.size
@@ -72,10 +75,6 @@ def rebalance(portfolio, period):
     return sum, cumul
 
 
-banch, portfolio, rebalanced_portfolio = random_portfolio(2018, 3, 10)
-# print(banch.tail())
-
-
 def given_portfolio(tickers, startY, nb_years):
     # init dates
     start = datetime.datetime(startY, 1, 1)
@@ -89,9 +88,8 @@ def given_portfolio(tickers, startY, nb_years):
 
     # Slice stocks data
     timeslice = sp500_data.loc[start:end]
-    notnaslice = timeslice.dropna(
-        axis=1
-    )  # is that valid? or a bias, since dropping some values
+    notnaslice = timeslice.dropna(axis=1, how='all')
+    # is that valid? or a bias, since dropping some values
     # that do not exist for the whole period
 
     ticker_names = tickers.split("-")
@@ -127,7 +125,7 @@ def SP500_tickers(startY, nb_years):
     end = datetime.datetime(startY + nb_years, 1, 1)
     # Slice stocks data
     timeslice = sp500_data.loc[start:end]
-    notnaslice = timeslice.dropna(axis=1)
+    notnaslice = timeslice.dropna(axis=1, how='all')
 
     all_ticks = sorted(list(notnaslice.columns))
 
@@ -202,3 +200,15 @@ def simulate(startY, nb_years, nb_stocks, nb_trials):
 # given_ticks = "-".join(sorted(rand_ticks))
 
 # print(given_ticks)
+
+
+# Debugging
+# 1. Load data
+
+# print(sp500_data.columns)
+# print(sp500_data.head())
+
+# 2. Random portfolio
+
+# banch, p, rp = random_portfolio(2018, 3, 10)
+# print(banch.tail())

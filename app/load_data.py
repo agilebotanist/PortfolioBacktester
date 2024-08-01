@@ -11,7 +11,7 @@ def download_sp500():
     print(sp500_info.head())
 
     # convert and add missing ['CROX', 'SKX', 'SHOO', 'AER']
-    sp500_tickers = sp500_info.Symbol.to_list() + ['CROX', 'SKX', 'SHOO', 'AER'] 
+    sp500_tickers = sp500_info.Symbol.to_list() + ['CROX', 'SKX', 'SHOO', 'AER', 'SAN.PA']
 
     # print(sp500_tickers)
 
