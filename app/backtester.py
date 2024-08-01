@@ -147,20 +147,18 @@ def simulate(startY, nb_years, nb_stocks, nb_trials):
             "TICKERS",
             "START",
             "NYEARS",
-            "RBDAYS",
-            "ROI1Y",
-            "SPY1Y",
             "ROI",
             "REBALANCED",
             "SPY",
+            "RBDAYS",
+            "ROI1Y",
+            "SPY1Y",
         ]
     )
 
     for _ in range(nb_trials):
         rand = random_ticks(startY, nb_years, nb_stocks)
-        banch, portfolio, rebalanced_portfolio = given_portfolio(rand,
-                                                                 startY,
-                                                                 nb_years)
+        banch, portfolio, rebalanced_portfolio = given_portfolio(rand, startY, nb_years)
         stats = stats._append(
             {
                 "TICKERS": rand,

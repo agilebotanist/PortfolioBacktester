@@ -10,7 +10,7 @@ st.title("Buy and Hold : Portfolio backtester 📈")
 
 
 startY = st.slider(
-    "Enter a starting year:",
+    "Enter a **starting** year:",
     min_value=1999,
     value=2017,
     step=1,
@@ -19,7 +19,7 @@ startY = st.slider(
 )
 
 nb_years = st.slider(
-    "Investment period in years:", min_value=1, value=3, max_value=10, step=1, 
+    "Investment **period** in years:", min_value=1, value=3, max_value=10, step=1, 
     help="3"
 )
 
@@ -30,7 +30,7 @@ if ("given_ticks" not in st.session_state) or _but:
     st.session_state.given_ticks = given_ticks
 
 tickers = st.text_input(
-    "Enter a list of tickers (stock) in your portfolio:",
+    "Enter a list of **tickers (stocks)** in your portfolio:",
     st.session_state.given_ticks,
     help="APD-CCI-CPRT-ES-INTU-RSG-TT-URI-V-VRSK",
 )
@@ -40,12 +40,12 @@ banch, portfolio, rebalanced = given_portfolio(tickers, startY, nb_years)
 
 # st.write(f"Return on Investment for {nb_years} years:", banch.iloc[-1])
 
-st.write(f"ROI for {nb_years} years:", banch["ROI"].iloc[-1])
+st.write(f"**ROI** for {nb_years} years:", banch["ROI"].iloc[-1])
 
-st.write("ROI with rebalancing:",
+st.write("ROI with **rebalancing**:",
          banch["REBALANCED"].iloc[-1])
 
-st.write("SP500 index perfromance:", banch["SPY"].iloc[-1])
+st.write("**SP500** index perfromance:", banch["SPY"].iloc[-1])
 
 # Create figure
 fig_banch = px.line(

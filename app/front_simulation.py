@@ -72,24 +72,4 @@ if _but:
     )
     st.plotly_chart(fig_roi)
 
-# fig_port = px.line(
-#     portfolio / portfolio.iloc[0],
-#     title="Portfolio",
-# )
-
-# fig_rebal = px.line(
-#     rebalanced / rebalanced.iloc[0],
-#     title="Rebalanced portfolio",
-# )
-
-# # Show figure
-# st.plotly_chart(fig_banch)
-
-# st.plotly_chart(fig_port)
-
-# st.plotly_chart(fig_rebal)
-
-# available_SP500 = "-".join(backtester.SP500_tickers(startY, nb_years))
-
-# st.write(f"**Choose from SP500 tickers (stocks) available in {startY}:**")
-# st.write(available_SP500)
+    st.write("**Raw data:**", stats)
