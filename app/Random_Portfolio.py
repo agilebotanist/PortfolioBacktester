@@ -4,9 +4,9 @@ from backtester import random_ticks as random_ticks
 from backtester import given_portfolio as given_portfolio
 from backtester import SP500_tickers as SP500_tickers
 
-st.set_page_config(page_title="Portfolio tester", page_icon="📈")
+st.set_page_config(page_title="Random portfolio tester", page_icon="📈")
 
-st.title("Buy and Hold : Portfolio backtester 📈")
+st.title("Buy and Hold : Random portfolio backtester 📈")
 
 
 startY = st.slider(

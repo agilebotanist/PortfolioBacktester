@@ -29,4 +29,4 @@ COPY . /app
 
 EXPOSE 8501
 
-ENTRYPOINT  ["streamlit", "run", "./app/Portfolio_Tester.py"]
+ENTRYPOINT  ["streamlit", "run", "./app/Random_Portfolio.py"]

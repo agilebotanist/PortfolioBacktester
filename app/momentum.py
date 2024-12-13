@@ -356,7 +356,7 @@ def stop_strategy(date, n_quarters, com, loss_rate, restart_nb):
 
         # detect restarting situation. Stop happened previously.
         # Sufficient number of positive quarters, buy a portfolio, pay full commission
-        if stop and n_positive == restart_nb:
+        if stop and n_positive == restart_nb + 1:
             cm = com
             stop = False
             n_stop = 0
@@ -489,7 +489,7 @@ def mom_simulate(startY, endY, n_quarters, com, loss_rate, restart_nb):
 # 7. Simulate
 n_quarters = 8
 loss_rate = 0.1
-restart_nb = 2
+restart_nb = 1
 com = 0.007
 stats = mom_simulate(2000, 2023, n_quarters, com, loss_rate, restart_nb)
 print(stats)

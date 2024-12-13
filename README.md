@@ -26,5 +26,5 @@ poetry run streamlit run ./app/front_simulation.py
 or for multipage version 📈
 
 ```
-poetry run streamlit run ./app/Portfolio_Tester.py
+poetry run streamlit run ./app/Random_Portfolio.py
 ```

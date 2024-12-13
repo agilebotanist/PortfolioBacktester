@@ -3,9 +3,9 @@ import pandas as pd
 import plotly.express as px
 from backtester import simulate as simulate
 
-st.set_page_config(page_title="Strategy Simulator", page_icon="📊")
+st.set_page_config(page_title="Random Portfolio Strategy Simulator", page_icon="📊")
 
-st.title("Buy and Hold : Simulator 📊")
+st.title("Buy and Hold : Random Portfolio Simulator 📊")
 
 
 startY = st.slider(
