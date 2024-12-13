@@ -12,6 +12,6 @@ st.write("Download the latest SP500 data from Yahoo Finance.")
 _but = st.button("Update data")
 
 if _but:
-    with st.spinner('Wait for it...'):
+    with st.spinner("Wait for it..."):
         spy_data, sp500_data = download_sp500()
     st.success("Done!")

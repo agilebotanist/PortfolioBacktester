@@ -19,8 +19,12 @@ startY = st.slider(
 )
 
 nb_years = st.slider(
-    "Investment **period** in years:", min_value=1, value=3, max_value=10, step=1, 
-    help="3"
+    "Investment **period** in years:",
+    min_value=1,
+    value=3,
+    max_value=10,
+    step=1,
+    help="3",
 )
 
 _but = st.button("Randomize portfolio")
@@ -42,8 +46,7 @@ banch, portfolio, rebalanced = given_portfolio(tickers, startY, nb_years)
 
 st.write(f"**ROI** for {nb_years} years:", banch["ROI"].iloc[-1])
 
-st.write("ROI with **rebalancing**:",
-         banch["REBALANCED"].iloc[-1])
+st.write("ROI with **rebalancing**:", banch["REBALANCED"].iloc[-1])
 
 st.write("**SP500** index perfromance:", banch["SPY"].iloc[-1])
 

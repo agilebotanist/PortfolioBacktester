@@ -18,13 +18,21 @@ startY = st.slider(
 )
 
 nb_years = st.slider(
-    "Investment **period** in years:", min_value=1, value=3,
-    max_value=10, step=1, help="3"
+    "Investment **period** in years:",
+    min_value=1,
+    value=3,
+    max_value=10,
+    step=1,
+    help="3",
 )
 
 nb_stocks = st.slider(
-    "Nb of **stocks** in portfolio:", min_value=1, value=10,
-    max_value=30, step=1, help="10"
+    "Nb of **stocks** in portfolio:",
+    min_value=1,
+    value=10,
+    max_value=30,
+    step=1,
+    help="10",
 )
 
 nb_trials = st.slider(
