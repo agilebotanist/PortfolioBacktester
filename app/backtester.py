@@ -48,7 +48,6 @@ def given_portfolio(tickers, startY, nb_years):
 
     ticker_names = tickers.split("-")
 
-    # Randomly select NB (e.g. 20) tickers for portfolio and normalize
     given_portfolio = notnaslice[ticker_names].dropna()
     given_portfolio.sort_index(axis=1, inplace=True)
 
