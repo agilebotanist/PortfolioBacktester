@@ -34,8 +34,10 @@ def rebalance(portfolio, period):
 
 def given_portfolio(tickers, startY, nb_years):
     # init dates
-    start = datetime.datetime(startY, 1, 1)
-    end = datetime.datetime(startY + nb_years, 1, 1)
+    start = pd.Timestamp(datetime.datetime(startY, 1, 1))
+    start = start.tz_localize('UTC')
+    end = pd.Timestamp(datetime.datetime(startY + nb_years, 1, 1))
+    end = end.tz_localize('UTC')
 
     # Slice stocks data
     timeslice = sp500_data.loc[start:end]
@@ -75,8 +77,10 @@ def given_portfolio(tickers, startY, nb_years):
 
 def SP500_tickers(startY, nb_years):
     # init dates
-    start = datetime.datetime(startY, 1, 1)
-    end = datetime.datetime(startY + nb_years, 1, 1)
+    start = pd.Timestamp(datetime.datetime(startY, 1, 1))
+    start = start.tz_localize('UTC')
+    end = pd.Timestamp(datetime.datetime(startY + nb_years, 1, 1))
+    end = end.tz_localize('UTC')
     # Slice stocks data
     timeslice = sp500_data.loc[start:end]
     notnaslice = timeslice.dropna(axis=1, how="all").dropna(thresh=50)
@@ -156,20 +160,20 @@ def simulate(startY, nb_years, nb_stocks, nb_trials):
 # print(p.head())
 # print(rp.head())
 
-# 4. Random tickers
 
-# t = random_ticks(2018, 3, 10)
-# print(t)
-
-# 5. SP500 tickers
+# 4. SP500 tickers
 
 # t = SP500_tickers(2018, 5)
+# print(t)
+
+# 5. Random tickers
+
+# t = random_ticks(2018, 3, 10)
 # print(t)
 
 # 6. Simulation
 
 # stats, med = simulate(2017, 3, 10, 10)
-
 # print(med)
 # print(stats.head())
 # print(stats.size)

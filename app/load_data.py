@@ -2,6 +2,7 @@ import yfinance as yf
 import pandas as pd
 import datetime
 import os
+import sys
 
 
 def download_sp500():
@@ -27,6 +28,9 @@ def download_sp500():
     sp500_data = yf.download(sp500_tickers, history, auto_adjust=True)["Close"]
     spy_data = yf.download("SPY", history, auto_adjust=True)["Close"]
 
+    # clean up
+    sp500_data = sp500_data.drop(['BRK.B','BF.B'], axis = 1)
+
     sp500_data.to_csv("./sp500_1999.csv", date_format="%Y-%m-%d")
     spy_data.to_csv("./spy_1999.csv", date_format="%Y-%m-%d")
 
@@ -43,6 +47,10 @@ def restore_sp500():
     sp500_data.set_index("Date", inplace=True)
     sp500_data.index = pd.to_datetime(sp500_data.index)
 
+    # Make spy_data and sp500_data timezone-aware
+    spy_data.index = spy_data.index.tz_localize('UTC')
+    sp500_data.index = sp500_data.index.tz_localize('UTC')
+
     return spy_data, sp500_data
 
 
@@ -56,3 +64,9 @@ def safe_load():
 
 
 spy_data, sp500_data = safe_load()
+
+if __name__ == "__main__":
+    if len(sys.argv) > 1 and sys.argv[1] == "--download":
+        download_sp500()
+    # else:
+    #     load_data()

@@ -14,17 +14,17 @@ poetry install
 ```
 # To run
 ```
-poetry poetry run streamlit run ./app/front_portfolio.py
+poetry run streamlit run ./app/front_portfolio.py
 ```
 
 or
 
 ```
-poetry poetry run streamlit run ./app/front_simulation.py
+poetry run streamlit run ./app/front_simulation.py
 ```
 
-or for multipage version
+or for multipage version 📈
 
 ```
-poetry poetry run streamlit run ./app/Portfolio_Tester_📈.py
+poetry run streamlit run ./app/Portfolio_Tester.py
 ```
