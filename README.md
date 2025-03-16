@@ -14,7 +14,7 @@ poetry install
 ```
 # To run
 ```
-poetry run streamlit run ./app/front_portfolio.py
+poetry run streamlit run /app/Random_Portfolio.py
 ```
 
 or
