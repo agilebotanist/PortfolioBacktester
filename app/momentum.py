@@ -487,9 +487,9 @@ def mom_simulate(startY, endY, n_quarters, com, loss_rate, restart_nb):
 # print(mystra)
 
 # 7. Simulate
-n_quarters = 8
-loss_rate = 0.1
-restart_nb = 1
-com = 0.007
-stats = mom_simulate(2000, 2023, n_quarters, com, loss_rate, restart_nb)
-print(stats)
+# n_quarters = 8
+# loss_rate = 0.1
+# restart_nb = 1
+# com = 0.007
+# stats = mom_simulate(2000, 2023, n_quarters, com, loss_rate, restart_nb)
+# print(stats)

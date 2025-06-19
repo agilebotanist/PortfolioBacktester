@@ -1,6 +1,7 @@
 [tool.poetry]
 name = "portfoliobacktester"
 version = "0.1.0"
+package-mode = false
 description = ""
 authors = ["Andrey Sadovykh <sadovykh@gmail.com>"]
 license = "APACHE 2.0"
