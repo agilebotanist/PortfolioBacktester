@@ -250,7 +250,7 @@ def com_strategy(date, n_quarters, com):
         strategy.append(
             {
                 "Date": date,
-                "Portfolio": sorted(m.index.values),
+                "Portfolio": sorted(set(m.index.values)),
                 "ROI": r,
                 "SPY": s,
                 "COM": cm,
