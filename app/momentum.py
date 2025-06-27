@@ -230,7 +230,7 @@ def com_strategy(date, n_quarters, com):
 
         # Access the 'Portfolio' from the last dictionary in the strategy list
         previous_portfolio = strategy[-1]["Portfolio"]
-        current_tickers = set(m.index.values)
+        current_tickers = sorted(set(m.index.values))
         remains = previous_portfolio.intersection(current_tickers)
         # Get the number of overlapping elements
         num_remains = len(remains)
